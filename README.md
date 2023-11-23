@@ -53,3 +53,6 @@ Ensure you have the following software installed:
    npm start
 
 - The API will be available at http://localhost:8000.
+
+## License
+- This project is licensed under the MIT License - see the LICENSE.md file for details.
