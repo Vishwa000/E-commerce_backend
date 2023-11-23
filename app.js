@@ -4,14 +4,14 @@ const productRoutes = require('./routes/productRoutes');
 const sequelize = require('./config/database');
 
 const app = express();
+const PORT = process.env.PORT || 8000;
 
 app.use(bodyParser.json());
+
 app.use('/api', productRoutes);
 
-const PORT = process.env.PORT || 3000;
-
 sequelize
-  .authenticate()
+  .sync({ force: false })
   .then(() => {
     console.log('Connection to the database has been established successfully.');
     app.listen(PORT, () => {
