@@ -1,10 +1,11 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const { v4: uuidv4 } = require('uuid');
 
 const Product = sequelize.define('Product', {
   id: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+    defaultValue: () => uuidv4(),
     primaryKey: true,
   },
   name: {
@@ -15,39 +16,7 @@ const Product = sequelize.define('Product', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  discount: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
-  quantityAvailable: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  currentPrice: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-  },
-  sizes: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: false,
-  },
-  colors: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: false,
-  },
-  punctuation: {
-    type: DataTypes.JSONB,
-    allowNull: false,
-  },
-  reviews: {
-    type: DataTypes.JSONB,
-    allowNull: false,
-  },
+  // Add other fields as needed
 });
 
 module.exports = Product;
-
