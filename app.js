@@ -2,9 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const productRoutes = require('./routes/productRoutes');
 const sequelize = require('./config/database');
+const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+
+// Enable CORS for all routes
+app.use(cors());
+
+// Your routes go here...
+
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 app.use(bodyParser.json());
 
