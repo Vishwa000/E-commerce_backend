@@ -28,6 +28,26 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
+// Controller function for reading a product by ID
+exports.getProductById = async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const product = await getProductById(productId);
+
+    if (!product) {
+      return res.status(404).send({ status: false, error: 'Product not found' });
+    }
+
+    res.status(200).send({ status: true, product });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ status: false, error: 'Internal Server Error' });
+  }
+};
+
+
+
 // Controller function for updating a product by ID
 exports.updateProduct = async (req, res) => {
   const productId = req.params.id;

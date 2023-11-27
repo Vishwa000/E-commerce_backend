@@ -1,24 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 const productRoutes = require('./routes/productRoutes');
 const sequelize = require('./config/database');
-const cors = require('cors');
+
 
 const app = express();
+const PORT = process.env.PORT; //8000
 
-// Enable CORS for all routes
+// Use the cors middleware
 app.use(cors());
-
-// Your routes go here...
-
-const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
 
 app.use(bodyParser.json());
 
+// JSON parsing error handling middleware
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).send({ status: false, error: 'Invalid JSON' });
+  }
+  next();
+});
+
 app.use('/api', productRoutes);
+
+// Global error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send({ status: false, error: 'Internal Server Error' });
+});
 
 sequelize
   .sync({ force: false })
