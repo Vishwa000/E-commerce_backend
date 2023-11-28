@@ -33,7 +33,7 @@ exports.getProductById = async (req, res) => {
   const productId = req.params.id;
 
   try {
-    const product = await getProductById(productId);
+    const product = await Product.findByPk(productId);
 
     if (!product) {
       return res.status(404).send({ status: false, error: 'Product not found' });
