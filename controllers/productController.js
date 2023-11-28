@@ -20,8 +20,8 @@ exports.createProduct = async (req, res) => {
 // Controller function for reading all products
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.findAll();
-    res.status(200).send({ status: true, products });
+    const data = await Product.findAll();
+    res.status(200).send({ status: true, data });
   } catch (error) {
     console.error(error);
     res.status(500).send({ status: false, error: 'Internal Server Error' });
@@ -33,13 +33,13 @@ exports.getProductById = async (req, res) => {
   const productId = req.params.id;
 
   try {
-    const product = await Product.findByPk(productId);
+    const data = await Product.findByPk(productId);
 
-    if (!product) {
+    if (!data) {
       return res.status(404).send({ status: false, error: 'Product not found' });
     }
 
-    res.status(200).send({ status: true, product });
+    res.status(200).send({ status: true, data });
   } catch (error) {
     console.error(error);
     res.status(500).send({ status: false, error: 'Internal Server Error' });
@@ -53,15 +53,15 @@ exports.updateProduct = async (req, res) => {
   const productId = req.params.id;
 
   try {
-    const product = await Product.findByPk(productId);
+    const data = await Product.findByPk(productId);
 
-    if (!product) {
+    if (!data) {
       return res.status(404).send({ status: false, error: 'Product not found' });
     }
 
-    await product.update(req.body);
+    await data.update(req.body);
 
-    res.status(200).send({ status: true, message: 'Product updated successfully', product });
+    res.status(200).send({ status: true, message: 'Product updated successfully', data });
   } catch (error) {
     console.error(error);
     res.status(400).send({ status: false, error: 'Failed to update product' });
@@ -73,13 +73,13 @@ exports.deleteProduct = async (req, res) => {
   const productId = req.params.id;
 
   try {
-    const product = await Product.findByPk(productId);
+    const data = await Product.findByPk(productId);
 
-    if (!product) {
+    if (!data) {
       return res.status(404).send({ status: false, error: 'Product not found' });
     }
 
-    await product.destroy();
+    await data.destroy();
 
     res.status(200).send({ status: true, message: 'Product deleted successfully' });
   } catch (error) {
