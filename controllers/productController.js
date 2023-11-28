@@ -28,21 +28,23 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-// Controller function for reading a product by ID
-exports.getProductById = async (req, res) => {
+// Controller function for updating a product by ID
+exports.updateProduct = async (req, res) => {
   const productId = req.params.id;
 
   try {
-    const product = await getProductById(productId);
+    const product = await Product.findByPk(productId);
 
     if (!product) {
       return res.status(404).send({ status: false, error: 'Product not found' });
     }
 
-    res.status(200).send({ status: true, product });
+    await product.update(req.body);
+
+    res.status(200).send({ status: true, message: 'Product updated successfully', product });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ status: false, error: 'Internal Server Error' });
+    res.status(400).send({ status: false, error: 'Failed to update product' });
   }
 };
 
