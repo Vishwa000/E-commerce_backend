@@ -8,9 +8,9 @@ exports.createProduct = async (req, res) => {
     const id = uuidv4();
 
     // Create a new product with the generated UUID
-    const product = await Product.create({ id, ...req.body });
+    const data = await Product.create({ id, ...req.body });
 
-    res.status(201).send({ status: true, message: 'Product created successfully', product });
+    res.status(201).send({ status: true, message: 'Product created successfully', data });
   } catch (error) {
     console.error(error);
     res.status(400).send({ status: false, message: 'Failed to create product' });
@@ -20,8 +20,8 @@ exports.createProduct = async (req, res) => {
 // Controller function for reading all products
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.findAll();
-    res.status(200).send({ status: true, products });
+    const data = await Product.findAll();
+    res.status(200).send({ status: true, data });
   } catch (error) {
     console.error(error);
     res.status(500).send({ status: false, error: 'Internal Server Error' });
@@ -30,16 +30,16 @@ exports.getAllProducts = async (req, res) => {
 
 // Controller function for getting a product by ID
 exports.getProductById = async (req, res) => {
-  const productId = req.params.id;
+  const dataId = req.params.id;
 
   try {
-    const product = await Product.findByPk(productId);
+    const data = await Product.findByPk(dataId);
 
-    if (!product) {
+    if (!data) {
       return res.status(404).send({ status: false, error: 'Product not found' });
     }
 
-    res.status(200).send({ status: true, product });
+    res.status(200).send({ status: true, data });
   } catch (error) {
     console.error(error);
     res.status(500).send({ status: false, error: 'Internal Server Error' });
@@ -49,18 +49,18 @@ exports.getProductById = async (req, res) => {
 
 // Controller function for updating a product by ID
 exports.updateProduct = async (req, res) => {
-  const productId = req.params.id;
+  const dataId = req.params.id;
 
   try {
-    const product = await Product.findByPk(productId);
+    const data = await Product.findByPk(dataId);
 
-    if (!product) {
+    if (!data) {
       return res.status(404).send({ status: false, error: 'Product not found' });
     }
 
-    await product.update(req.body);
+    await data.update(req.body);
 
-    res.status(200).send({ status: true, message: 'Product updated successfully', product });
+    res.status(200).send({ status: true, message: 'Product updated successfully', data });
   } catch (error) {
     console.error(error);
     res.status(400).send({ status: false, error: 'Failed to update product' });
@@ -69,16 +69,16 @@ exports.updateProduct = async (req, res) => {
 
 // Controller function for deleting a product by ID
 exports.deleteProduct = async (req, res) => {
-  const productId = req.params.id;
+  const dataId = req.params.id;
 
   try {
-    const product = await Product.findByPk(productId);
+    const data = await Product.findByPk(dataId);
 
-    if (!product) {
+    if (!data) {
       return res.status(404).send({ status: false, error: 'Product not found' });
     }
 
-    await product.destroy();
+    await data.destroy();
 
     res.status(200).send({ status: true, message: 'Product deleted successfully' });
   } catch (error) {
